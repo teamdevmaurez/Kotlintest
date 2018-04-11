@@ -1,0 +1,43 @@
+ext {
+    // Sdk and tools
+    supportLibVer = '27.1.0'
+
+    //KOTLIN
+    kotlin_version = '1.2.31'
+    androidktx_version = '0.2'
+    anko_version = '0.10.4'
+
+    //RETROFIT
+    retrofit_version = '2.3.0'
+    logging_interceptor_version = '3.10.0'
+    moshi_version = '1.5.0'
+
+    constraint_layout_version = '1.0.2'
+
+    //REACTIVE PROGRAMMING
+    rxjava2_version = '2.0.1'
+    rxandroid_version = "2.0.2"
+    rxKotlin_version = "2.2.0"
+    rxBindinf_version = '2.1.1'
+
+    //DATABASE
+    room_version = '1.1.0-beta1'
+
+    //LOG
+    timber_version = '4.6.1'
+
+    //INJECTION
+    dagger2_Version = '2.11'
+
+    //TOOLS
+    stetho_version = '1.5.0'
+
+    //IMAGE
+    glide_version = '4.6.1'
+    okhttp_version = '3.9.1'
+
+    //TEST
+    junit_version = '4.12'
+    runner_version = '1.0.1'
+    espresso_version = '3.0.1'
+}

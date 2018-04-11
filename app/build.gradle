@@ -1,0 +1,176 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    apply from: '../dependencies.gradle'
+
+    compileSdkVersion 27
+
+    defaultConfig {
+        applicationId "com.teamdevmaurez.kotlintest"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix '-DEBUG'
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        release {
+//            try {
+//                storeFile file("myapp.keystore")
+//                storePassword KEYSTORE_PASSWORD
+//                keyAlias "thekey"
+//                keyPassword KEY_PASSWORD
+//            }
+//            catch (ex) {
+//                throw new InvalidUserDataException("You should define KEYSTORE_PASSWORD and KEY_PASSWORD in gradle.properties.")
+//            }
+        }
+    }
+
+
+    flavorDimensions 'server', 'version'
+
+    productFlavors {
+        qa {
+            dimension 'server'
+            applicationId "com.teamdevmaurez.kotlintest.qa"
+            versionCode 1
+            versionName "1.0"
+
+            getProps('./configs/QA.props').each { p ->
+                buildConfigField 'String', p.key, p.value
+            }
+        }
+
+        prod {
+            dimension 'server'
+            applicationId "com.teamdevmaurez.kotlintest.prod"
+            minSdkVersion 14
+            versionCode 1
+            versionName "1.0"
+            //signingConfig signingConfigs.release
+
+            getProps('./configs/prod.props').each { p ->
+                buildConfigField 'String', p.key, p.value
+            }
+        }
+
+        dev21 {
+            dimension "version"
+            minSdkVersion 21
+        }
+
+        dev14 {
+            dimension "version"
+            minSdkVersion 14
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+        quiet true
+        lintConfig file('./script/lint.xml')
+    }
+}
+
+def getProps(path) {
+    Properties props = new Properties()
+    props.load(new FileInputStream(file(path)))
+    return props
+}
+
+
+dependencies {
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.android.support' && details.requested.name == 'support-v4') {
+                details.useVersion "27.1.0"
+            }
+        }
+    }
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "androidx.core:core-ktx:$androidktx_version"
+    implementation "org.jetbrains.anko:anko:$anko_version"
+
+    implementation "com.android.support:appcompat-v7:$supportLibVer"
+    implementation "com.android.support:support-v4:$supportLibVer"
+    implementation "com.android.support:design:$supportLibVer"
+
+    implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$dagger2_Version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_Version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_Version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2_Version"
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin_version"
+
+    //RxBinding
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindinf_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxBindinf_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxBindinf_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-design-kotlin:$rxBindinf_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxBindinf_version"
+
+    //Log
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // Database: Room
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+
+    //Image
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.github.bumptech.glide:okhttp-integration:$glide_version"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+
+    //TOOLS
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+
+    // Dependencies for tests
+
+    // Test helpers for Room
+    testImplementation "android.arch.persistence.room:testing:$room_version"
+
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "com.android.support.test:runner:$runner_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+}
+
+
+
