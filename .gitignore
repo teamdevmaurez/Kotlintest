@@ -1,5 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Android template
 # Built application files
 *.apk
 *.ap_
@@ -57,22 +55,9 @@ freeline.py
 freeline/
 freeline_project_description.json
 
-.gitignore
-.idea/misc.xml
-.idea/runConfigurations.xml
-Kotlintest.iml
-app/.gitignore
-app/app.iml
-app/build.gradle
-app/configs/
-app/libs/
-app/proguard-rules.pro
-app/src/
-build.gradle
-dependencies.gradle
-gradle.properties
-gradle/
-gradlew
-gradlew.bat
-scripts/
-settings.gradle
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
