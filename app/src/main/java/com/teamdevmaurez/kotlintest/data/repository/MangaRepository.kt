@@ -9,7 +9,6 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import org.buffer.android.boilerplate.data.mapper.MangaMapper
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -19,12 +18,18 @@ class MangaRepository @Inject internal constructor(private val mangaScraperApi: 
 
     val mangasMapper = MangaMapper()
 
+    override fun count(): Observable<Int> {
+        Timber.d("count()")
+
+        return mangaDao.count().toObservable()
+    }
+
     override fun getMangas(): Observable<List<MangaEntity>> {
         Timber.d("getMangas()")
 
         return Observable.concatArray(
-                getMangasFromDb(),
-                getMangasFromApi())
+                getMangasFromDb()/*,
+                getMangasFromApi()*/)
     }
 
 
@@ -58,7 +63,7 @@ class MangaRepository @Inject internal constructor(private val mangaScraperApi: 
 
                     storeUsersInDb(it)
                 }.doOnError {
-                    Timber.d("getMangasFromApi:error ${it} ")
+                    Timber.d("getMangasFromApi:doOnError ${it} ")
                 }
 
 

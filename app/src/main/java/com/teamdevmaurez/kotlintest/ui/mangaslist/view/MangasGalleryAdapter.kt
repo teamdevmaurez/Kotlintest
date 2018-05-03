@@ -15,7 +15,7 @@ class MangasGalleryAdapter(private val mangaListItems: MutableList<MangaEntity>)
 
     override fun getItemCount() = this.mangaListItems.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MangaViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.item_manga_list, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MangaViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_manga_list, parent, false))
 
     override fun onBindViewHolder(holder: MangaViewHolder, position: Int) = holder.let {
         it.clear()
@@ -40,8 +40,8 @@ class MangasGalleryAdapter(private val mangaListItems: MutableList<MangaEntity>)
         }
 
         fun onBind(position: Int) {
-            val title = mangaListItems[position]?.name
-            val coverUrl = mangaListItems[position]?.cover
+            val title = mangaListItems[position].name
+            val coverUrl = mangaListItems[position].cover
 
             inflateData(title, coverUrl)
         }

@@ -11,7 +11,10 @@ import io.reactivex.Single
 @Dao
 interface MangaDao {
 
-    @Query("select * from mangas")
+    @Query("SELECT COUNT(*) FROM mangas")
+    fun count(): Single<Int>
+
+    @Query("SELECT * FROM mangas")
     fun getMangas(): Single<List<MangaEntity>>
 
     @Insert(onConflict = IGNORE)

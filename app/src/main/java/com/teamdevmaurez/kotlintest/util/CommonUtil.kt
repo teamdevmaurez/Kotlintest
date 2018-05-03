@@ -6,9 +6,7 @@ import android.graphics.Color
 import androidx.graphics.drawable.toDrawable
 import com.teamdevmaurez.kotlintest.R
 
-/**
- * Created by jyotidubey on 11/01/18.
- */
+
 object CommonUtil {
 
     fun showLoadingDialog(context: Context?): ProgressDialog {

@@ -6,4 +6,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <!--Fragment MangaList-->
+    <string name="fragment_mangaList_textView_empty">List Not Loaded</string>
+
+    <!--SnackBar-->
+    <string name="SnackBar_text_loading">LOADING</string>
 </resources>

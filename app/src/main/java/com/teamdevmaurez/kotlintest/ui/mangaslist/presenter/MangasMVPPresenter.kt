@@ -10,4 +10,5 @@ import com.teamdevmaurez.kotlintest.ui.mangaslist.view.MangasMVPView
 interface MangasMVPPresenter<V : MangasMVPView, I : MangasMVPInteractor> : MVPPresenter<V, I> {
 
     fun onViewPrepared()
+    fun onDestroyView()
 }

@@ -23,7 +23,21 @@ internal fun FragmentManager.addFragment(containerViewId: Int,
                                          tag: String,
                                          slideIn: Int = R.anim.slide_left,
                                          slideOut: Int = R.anim.slide_right) {
-    Timber.d("addFragment Fragment %s", tag)
+    Timber.d("Add Fragment %s", tag)
+
+    this.beginTransaction()
+            //.disallowAddToBackStack()
+            //.setCustomAnimations(slideIn, slideOut)
+            .add(containerViewId, fragment, tag)
+            .commit()
+}
+
+internal fun FragmentManager.replaceFragment(containerViewId: Int,
+                                         fragment: Fragment,
+                                         tag: String,
+                                         slideIn: Int = R.anim.slide_left,
+                                         slideOut: Int = R.anim.slide_right) {
+    Timber.d("Add Fragment %s", tag)
 
     this.beginTransaction()
             //.disallowAddToBackStack()

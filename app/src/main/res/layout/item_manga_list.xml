@@ -8,8 +8,7 @@
     android:padding="5dp"
     android:background="@drawable/linearborder">
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -26,7 +25,7 @@
             android:id="@+id/coverImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="Image cover of manga"/>
+            android:contentDescription="Image cover of manga" />
 
     </RelativeLayout>
 

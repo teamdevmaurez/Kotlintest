@@ -1,12 +1,16 @@
 package com.teamdevmaurez.kotlintest.ui.base.view
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.View
-import com.teamdevmaurez.kotlintest.util.CommonUtil
+import android.view.ViewGroup
+import android.widget.ProgressBar
+import com.teamdevmaurez.kotlintest.R
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Created by teamdevmaurez on 26/03/2018.
@@ -14,7 +18,7 @@ import dagger.android.support.AndroidSupportInjection
 abstract class BaseFragment : Fragment(), BaseView {
 
     private var parentActivity: BaseActivity? = null
-    private var progressDialog: ProgressDialog? = null
+    private var snackbar: Snackbar? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -22,7 +26,7 @@ abstract class BaseFragment : Fragment(), BaseView {
         if (context is BaseActivity) {
             val activity = context as BaseActivity?
             this.parentActivity = activity
-            activity?.onFragmentAttached()
+            activity?.onFragmentAttached(tag)
         }
     }
 
@@ -38,14 +42,19 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     override fun hideProgress() {
-        if (progressDialog != null && progressDialog?.isShowing!!) {
-            progressDialog?.cancel()
-        }
+        //snackbar?.let { if (it.isShown) it.dismiss() }
     }
 
     override fun showProgress() {
         hideProgress()
-        progressDialog = CommonUtil.showLoadingDialog(this.context)
+
+        var coordinatorLayout: CoordinatorLayout = parentActivity?.main_CoordinatorLayout!!
+        snackbar = Snackbar.make(coordinatorLayout, getString(R.string.SnackBar_text_loading), Snackbar.LENGTH_LONG)
+        val snackbarLayout = snackbar?.view
+        val contentLay = snackbarLayout?.findViewById<View>(android.support.design.R.id.snackbar_text)?.parent as ViewGroup
+        val item = ProgressBar(parentActivity)
+        contentLay.addView(item)
+        snackbar?.show()
     }
 
     override fun showError(e: Throwable) {
@@ -57,7 +66,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     private fun performDependencyInjection() = AndroidSupportInjection.inject(this)
 
     interface CallBack {
-        fun onFragmentAttached()
+        fun onFragmentAttached(tag: String?)
         fun onFragmentDetached(tag: String)
     }
 

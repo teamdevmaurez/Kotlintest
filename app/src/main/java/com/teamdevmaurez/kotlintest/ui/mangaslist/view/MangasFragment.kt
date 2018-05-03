@@ -1,12 +1,12 @@
 package com.teamdevmaurez.kotlintest.ui.mangaslist.view
 
 import android.os.Bundle
+import android.support.transition.Visibility
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.teamdevmaurez.kotlintest.R
 import com.teamdevmaurez.kotlintest.data.database.mangas.MangaEntity
 import com.teamdevmaurez.kotlintest.ui.base.view.BaseFragment
@@ -42,6 +42,8 @@ class MangasFragment : BaseFragment(), MangasMVPView {
     internal lateinit var presenter: MangasMVPPresenter<MangasMVPView, MangasMVPInteractor>
 
 
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Timber.d("onCreateView")
 
@@ -53,6 +55,10 @@ class MangasFragment : BaseFragment(), MangasMVPView {
 
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     override fun setUp() {
@@ -69,12 +75,26 @@ class MangasFragment : BaseFragment(), MangasMVPView {
     }
 
     override fun displayMangaList(mangas: List<MangaEntity>?) = mangas?.let {
-        mangasGalleryAdapter.addMangasToList(it)
+        Timber.d("displayMangaList")
+
+        if(!it.isEmpty()) {
+            //textView_empty_list.visibility = View.GONE
+            gallery_manga_recycler_view.visibility = View.VISIBLE
+
+            mangasGalleryAdapter.addMangasToList(it)
+        }
+
     }
+
+    override fun showEmptylist() {
+        textView_empty_list.visibility = View.VISIBLE
+        gallery_manga_recycler_view.visibility = View.GONE
+    }
+
 
     override fun onDestroyView() {
         presenter.onDetach()
-        //Glide.get(requireContext()).clearMemory();
+
         super.onDestroyView()
     }
 }

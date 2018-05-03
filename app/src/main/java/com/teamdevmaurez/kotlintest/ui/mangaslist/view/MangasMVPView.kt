@@ -10,4 +10,6 @@ interface MangasMVPView : BaseView {
 
     fun displayMangaList(mangas: List<MangaEntity>?): Unit?
 
+    fun showEmptylist()
+
 }

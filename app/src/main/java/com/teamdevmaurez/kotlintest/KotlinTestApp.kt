@@ -10,9 +10,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
 import javax.inject.Inject
-import android.arch.persistence.db.SupportSQLiteDatabase
-
-
 
 
 /**
@@ -30,24 +27,24 @@ class KotlinTestApp : Application(), HasActivityInjector {
         super.onCreate()
 
         if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+                     Timber.plant(Timber.DebugTree())
+/*
+                    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                             .detectDiskReads()
+                             .detectDiskWrites()
+                             .detectNetwork()   // or .detectAll() for all detectable problems
+                             .penaltyLog() // Log detected violations to the system log.
+                             .build())
 
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork()   // or .detectAll() for all detectable problems
-                    .penaltyLog() // Log detected violations to the system log.
-                    .build())
-
-            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyLog()
-                    .penaltyDeath() // Crashes the whole process on violation.
-                    .build())
+                     StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                             .detectLeakedSqlLiteObjects()
+                             .detectLeakedClosableObjects()
+                             .penaltyLog()
+                             .penaltyDeath() // Crashes the whole process on violation.
+                             .build())
 
 
-            Stetho.initializeWithDefaults(this);
+                     Stetho.initializeWithDefaults(this);*/
         } else {
             Timber.plant(CrashReportingTree())
         }

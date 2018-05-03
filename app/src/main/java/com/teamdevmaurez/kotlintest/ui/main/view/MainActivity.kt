@@ -14,6 +14,7 @@ import com.teamdevmaurez.kotlintest.ui.main.presenter.MainMVPPresenter
 import com.teamdevmaurez.kotlintest.ui.mangaslist.view.MangasFragment
 import com.teamdevmaurez.kotlintest.util.extension.addFragment
 import com.teamdevmaurez.kotlintest.util.extension.removeFragment
+import com.teamdevmaurez.kotlintest.util.extension.replaceFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,8 +36,14 @@ class MainActivity : BaseActivity(), MainMVPView, NavigationView.OnNavigationIte
         Timber.d("onCreate()")
 
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        if (savedInstanceState == null) {
+            Timber.d("add MangasFragment")
+            supportFragmentManager.replaceFragment(R.id.fragment_Content, MangasFragment.newInstance(), MangasFragment.TAG)
+        }
 
         presenter.onAttach(this)
 
@@ -45,16 +52,9 @@ class MainActivity : BaseActivity(), MainMVPView, NavigationView.OnNavigationIte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
-        openMangaGalleryFragment()
     }
 
-    override fun openMangaGalleryFragment() {
-        Timber.d("openMangaGalleryFragment()")
 
-        // lockDrawer()
-        supportFragmentManager.addFragment(R.id.fragment_Content, MangasFragment.newInstance(), MangasFragment.TAG)
-    }
 
     override fun onBackPressed() {
         Timber.d("onBackPressed()")
@@ -103,79 +103,24 @@ class MainActivity : BaseActivity(), MainMVPView, NavigationView.OnNavigationIte
         return true
     }
 
-    override fun onFragmentAttached() {
-        Timber.d("onFragmentAttached()")
+    override fun onFragmentAttached(tag: String?) {
+        Timber.d("onFragmentAttached() : %s", tag)
     }
 
     override fun onFragmentDetached(tag: String) {
-        Timber.d("onFragmentDetached()")
+        Timber.d("onFragmentDetached() : %s", tag)
 
         supportFragmentManager?.removeFragment(tag = tag)
     }
 
-    /*
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_old)
 
-        val initialTextviewtranslationY = TextView_progress.translationY
 
-        seekBar2.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                TextView_progress.text = progress.toString()
+    override fun openMangaGalleryFragment() {
+        Timber.d("openMangaGalleryFragment()")
 
-                val translationDistance = (initialTextviewtranslationY + progress * resources.getDimension(R.dimen.text_anim_step) * -1)
-
-                TextView_progress.animate().translationY(translationDistance)
-
-                //if(!fromUser) {
-                    //TextView_progress.animate().setDuration(500).rotationBy(360f).translationY(initialTextviewtranslationY)
-                //}
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-        })
-
-        button_reset.setOnClickListener(){
-            seekBar2.progress = 0
-
-            beginSearch()
-        }
-
+        // lockDrawer()
+        supportFragmentManager.replaceFragment(R.id.fragment_Content, MangasFragment.newInstance(), MangasFragment.TAG)
     }
 
 
-
-    private var disposable: Disposable? = null
-
-    private val mangaScraperServ by lazy {
-        MangaScraperApi.create()
-    }
-
-    private fun beginSearch() {
-        //imageView2.animate().setInterpolator {  }setInterpolator()setDuration(5500).rotationBy(360f)
-
-        disposable = mangaScraperServ.getChapter("mangareader.net", "naruto", 1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { result -> textView_name.text = "Name of manga: ${result.name} " },
-                        { error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show() }
-                )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        disposable?.dispose()
-    }
-
-    */
 }

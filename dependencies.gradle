@@ -3,7 +3,7 @@ ext {
     supportLibVer = '27.1.0'
 
     //KOTLIN
-    kotlin_version = '1.2.31'
+    kotlin_version = '1.2.40'
     androidktx_version = '0.2'
     anko_version = '0.10.4'
 
@@ -21,7 +21,7 @@ ext {
     rxBindinf_version = '2.1.1'
 
     //DATABASE
-    room_version = '1.1.0-beta1'
+    room_version = '1.1.0-rc1'
 
     //LOG
     timber_version = '4.6.1'
@@ -33,7 +33,7 @@ ext {
     stetho_version = '1.5.0'
 
     //IMAGE
-    glide_version = '4.6.1'
+    glide_version = '4.7.1'
     okhttp_version = '3.9.1'
 
     //TEST

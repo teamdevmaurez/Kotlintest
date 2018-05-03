@@ -8,6 +8,7 @@ import io.reactivex.Observable
  */
 interface MangaRepositoryHelper {
 
+    fun count() : Observable<Int>
     fun getMangas(): Observable<List<MangaEntity>>
 
 }
