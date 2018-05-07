@@ -11,9 +11,7 @@ import org.buffer.android.boilerplate.data.mapper.MangaMapper
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * Created by teamdevmaurez on 21/03/2018.
- */
+
 class MangaRepository @Inject internal constructor(private val mangaScraperApi: MangaScraperApi, private val mangaDao: MangaDao) : MangaRepositoryHelper {
 
     val mangasMapper = MangaMapper()
@@ -28,8 +26,8 @@ class MangaRepository @Inject internal constructor(private val mangaScraperApi: 
         Timber.d("getMangas()")
 
         return Observable.concatArray(
-                getMangasFromDb()/*,
-                getMangasFromApi()*/)
+                getMangasFromDb(),
+                getMangasFromApi())
     }
 
 
@@ -61,7 +59,7 @@ class MangaRepository @Inject internal constructor(private val mangaScraperApi: 
                 .doOnNext {
                     Timber.d("getMangasFromApi: manga count ${it?.size}")
 
-                    storeUsersInDb(it)
+                    storeMangasInDb(it)
                 }.doOnError {
                     Timber.d("getMangasFromApi:doOnError ${it} ")
                 }
@@ -69,14 +67,14 @@ class MangaRepository @Inject internal constructor(private val mangaScraperApi: 
 
     }
 
-    private fun storeUsersInDb(mangas: List<MangaEntity>) {
+    private fun storeMangasInDb(mangas: List<MangaEntity>) {
         Timber.d("storeUsersInDb()")
 
         Observable.fromCallable { mangaDao.insertMangas(mangas) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe {
-                    Timber.d("Inserted ${mangas?.size} manga from API in DB...")
+                    Timber.d("Inserted ${mangas.size} manga from API in DB...")
                 }
     }
 

@@ -40,11 +40,11 @@ object NetworkModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideOkHttpClient(cache:Cache): OkHttpClient {
+    internal fun provideOkHttpClient(cache: Cache): OkHttpClient {
         return OkHttpClient().newBuilder()
                 .cache(cache)
                 .addInterceptor(HttpLoggingInterceptor().apply {
-                    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.NONE else HttpLoggingInterceptor.Level.NONE
                 })
                 .build()
     }

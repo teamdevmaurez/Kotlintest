@@ -12,5 +12,8 @@
     <string name="fragment_mangaList_textView_empty">List Not Loaded</string>
 
     <!--SnackBar-->
-    <string name="SnackBar_text_loading">LOADING</string>
+    <string name="snackBar_text_launch_synchronization">Launching synchronization with server</string>
+    <string name="snackBar_text_error">Synchronization with server failed</string>
+
+
 </resources>

@@ -11,10 +11,6 @@ import dagger.android.HasActivityInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-
-/**
- * Created by teamdevmaurez on 22/03/2018.
- */
 class KotlinTestApp : Application(), HasActivityInjector {
 
     @Inject
@@ -27,24 +23,28 @@ class KotlinTestApp : Application(), HasActivityInjector {
         super.onCreate()
 
         if (BuildConfig.DEBUG) {
-                     Timber.plant(Timber.DebugTree())
-/*
-                    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                             .detectDiskReads()
-                             .detectDiskWrites()
-                             .detectNetwork()   // or .detectAll() for all detectable problems
-                             .penaltyLog() // Log detected violations to the system log.
-                             .build())
+            Timber.plant(Timber.DebugTree())
 
-                     StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                             .detectLeakedSqlLiteObjects()
-                             .detectLeakedClosableObjects()
-                             .penaltyLog()
-                             .penaltyDeath() // Crashes the whole process on violation.
-                             .build())
+            if (BuildConfig.ACTIVATE_STRICT_MODE.toBoolean()) {
 
+                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                        .detectDiskReads()
+                        .detectDiskWrites()
+                        .detectNetwork()   // or .detectAll() for all detectable problems
+                        .penaltyLog() // Log detected violations to the system log.
+                        .build())
 
-                     Stetho.initializeWithDefaults(this);*/
+                StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                        .detectLeakedSqlLiteObjects()
+                        .detectLeakedClosableObjects()
+                        .penaltyLog()
+                        .penaltyDeath() // Crashes the whole process on violation.
+                        .build())
+            }
+
+            if (BuildConfig.ACTIVATE_STETHO.toBoolean()) {
+                Stetho.initializeWithDefaults(this);
+            }
         } else {
             Timber.plant(CrashReportingTree())
         }
@@ -68,15 +68,16 @@ class KotlinTestApp : Application(), HasActivityInjector {
                 return
             }
 
-//            CrashLibrary.log(priority, tag, message)
-//
-//            if (t != null) {
-//                if (priority == Log.ERROR) {
-//                    CrashLibrary.logError(t)
-//                } else if (priority == Log.WARN) {
-//                    CrashLibrary.logWarning(t)
-//                }
-//            }
+/*            CrashLibrary.log(priority, tag, message)
+
+            if (t != null) {
+                if (priority == Log.ERROR) {
+                    CrashLibrary.logError(t)
+                } else if (priority == Log.WARN) {
+                    CrashLibrary.logWarning(t)
+                }
+            }
+*/
         }
     }
 }

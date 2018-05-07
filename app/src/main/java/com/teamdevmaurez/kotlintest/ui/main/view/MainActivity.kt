@@ -35,6 +35,7 @@ class MainActivity : BaseActivity(), MainMVPView, NavigationView.OnNavigationIte
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate()")
 
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
@@ -53,7 +54,6 @@ class MainActivity : BaseActivity(), MainMVPView, NavigationView.OnNavigationIte
 
         nav_view.setNavigationItemSelectedListener(this)
     }
-
 
 
     override fun onBackPressed() {
@@ -112,7 +112,6 @@ class MainActivity : BaseActivity(), MainMVPView, NavigationView.OnNavigationIte
 
         supportFragmentManager?.removeFragment(tag = tag)
     }
-
 
 
     override fun openMangaGalleryFragment() {

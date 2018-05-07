@@ -1,8 +1,5 @@
 package com.teamdevmaurez.kotlintest.data.database.mangas
 
-/**
- * Created by teamdevmaurez on 21/03/2018.
- */
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

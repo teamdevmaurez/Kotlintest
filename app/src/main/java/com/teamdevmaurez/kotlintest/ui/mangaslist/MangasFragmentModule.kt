@@ -11,9 +11,7 @@ import com.teamdevmaurez.kotlintest.util.PreCachingLayoutManager
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by teamdevmaurez on 26/03/2018.
- */
+
 @Module
 class MangasFragmentModule {
 

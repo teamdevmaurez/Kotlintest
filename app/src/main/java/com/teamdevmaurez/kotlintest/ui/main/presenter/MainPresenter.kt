@@ -7,9 +7,7 @@ import com.teamdevmaurez.kotlintest.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-/**
- * Created by teamdevmaurez on 15/03/2018.
- */
+
 class MainPresenter<V : MainMVPView, I : MainMVPInteractor>
 @Inject
 internal constructor(interactor: I, schedulerProvider: SchedulerProvider, disposable: CompositeDisposable) : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable), MainMVPPresenter<V, I> {
@@ -21,6 +19,5 @@ internal constructor(interactor: I, schedulerProvider: SchedulerProvider, dispos
     override fun onDrawerMangasGalleryClick() {
         getView()?.openMangaGalleryFragment()
     }
-
 
 }

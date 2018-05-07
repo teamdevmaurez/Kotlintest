@@ -4,9 +4,7 @@ import com.teamdevmaurez.kotlintest.ui.mangaslist.view.MangasFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-/**
- * Created by teamdevmaurez on 05/04/2018.
- */
+
 @Module
 internal abstract class MangasFragmentProvider {
 

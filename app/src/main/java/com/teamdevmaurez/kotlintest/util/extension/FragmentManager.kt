@@ -33,10 +33,10 @@ internal fun FragmentManager.addFragment(containerViewId: Int,
 }
 
 internal fun FragmentManager.replaceFragment(containerViewId: Int,
-                                         fragment: Fragment,
-                                         tag: String,
-                                         slideIn: Int = R.anim.slide_left,
-                                         slideOut: Int = R.anim.slide_right) {
+                                             fragment: Fragment,
+                                             tag: String,
+                                             slideIn: Int = R.anim.slide_left,
+                                             slideOut: Int = R.anim.slide_right) {
     Timber.d("Add Fragment %s", tag)
 
     this.beginTransaction()

@@ -4,10 +4,6 @@ import com.squareup.moshi.Json
 import java.util.*
 
 
-/**
- * Created by teamdevmaurez on 21/02/2018.
- */
-
 object Model {
 
     data class Chapter(var href: String, var name: String, var pages: List<Page>, var lastUpdate: Date)

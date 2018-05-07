@@ -5,9 +5,6 @@ import com.teamdevmaurez.kotlintest.data.network.NetworkConstants.HEADER_XMASHAP
 import io.reactivex.Observable
 import retrofit2.http.*
 
-/**
- * Created by teamdevmaurez on 21/02/2018.
- */
 interface MangaScraperApi {
 
 

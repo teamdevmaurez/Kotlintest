@@ -1,7 +1,6 @@
 package com.teamdevmaurez.kotlintest.ui.mangaslist.view
 
 import android.os.Bundle
-import android.support.transition.Visibility
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -18,9 +17,7 @@ import kotlinx.android.synthetic.main.fragment_gallery_mangas.*
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * Created by teamdevmaurez on 26/03/2018.
- */
+
 class MangasFragment : BaseFragment(), MangasMVPView {
 
     companion object {
@@ -42,7 +39,7 @@ class MangasFragment : BaseFragment(), MangasMVPView {
     internal lateinit var presenter: MangasMVPPresenter<MangasMVPView, MangasMVPInteractor>
 
 
-
+    /************* Fragment IMPL **************/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Timber.d("onCreateView")
@@ -50,15 +47,24 @@ class MangasFragment : BaseFragment(), MangasMVPView {
         return inflater.inflate(R.layout.fragment_gallery_mangas, container, false)
     }
 
+    override fun onDestroyView() {
+        presenter.onDetach()
+
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+
+    /************* BaseFragment IMPL **************/
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Timber.d("onViewCreated")
 
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun setUp() {
@@ -74,27 +80,39 @@ class MangasFragment : BaseFragment(), MangasMVPView {
         presenter.onViewPrepared()
     }
 
-    override fun displayMangaList(mangas: List<MangaEntity>?) = mangas?.let {
-        Timber.d("displayMangaList")
 
-        if(!it.isEmpty()) {
-            //textView_empty_list.visibility = View.GONE
-            gallery_manga_recycler_view.visibility = View.VISIBLE
+    /************* BaseFragment IMPL **************/
 
-            mangasGalleryAdapter.addMangasToList(it)
+    override fun displayMangaList(mangas: List<MangaEntity>?) {
+        mangas?.let {
+            Timber.d("displayMangaList")
+
+            if (!it.isEmpty()) {
+
+                hideEmptylist()
+
+                mangasGalleryAdapter.addMangasToList(it)
+            }
+
+            if (mangasGalleryAdapter.itemCount == 0) {
+                showEmptylist()
+            }
         }
+    }
 
+    override fun hideEmptylist() {
+        Timber.d("hideEmptylist")
+
+        textView_empty_list.visibility = View.GONE
+        gallery_manga_recycler_view.visibility = View.VISIBLE
     }
 
     override fun showEmptylist() {
+        Timber.d("showEmptylist")
+
         textView_empty_list.visibility = View.VISIBLE
         gallery_manga_recycler_view.visibility = View.GONE
     }
 
 
-    override fun onDestroyView() {
-        presenter.onDetach()
-
-        super.onDestroyView()
-    }
 }
